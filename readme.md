@@ -26,6 +26,8 @@ This will render a simple dropdown with a search input, like so.
 
 #### Demo
 
+<!-- @include: filename{start-end} -->
+
 <better-select>
   <select name="fruit">
     <option value="apple">Apple</option>
