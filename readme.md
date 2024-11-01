@@ -4,6 +4,13 @@ Better Select makes html `<select>` elements better, by adding features like typ
 
 > The current version of Better Select is an *extreme* proof of concept. There are still quite a few features to be added.
 
+## Setup
+
+Load Better Select in the `<head>` of your document.
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/reallygoodsoftware/better-select@0.2.0/betterselect.min.js"></script>
+```
 
 ## Basic Usage
 
