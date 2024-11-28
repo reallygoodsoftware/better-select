@@ -4,14 +4,6 @@ Better Select makes html `<select>` elements better, by adding features like typ
 
 > The current version of Better Select is an *extreme* proof of concept. There are still quite a few features to be added.
 
-## Setup
-
-Load Better Select in the `<head>` of your document.
-
-```html
-<script src="https://cdn.jsdelivr.net/gh/reallygoodsoftware/better-select@0.2.0/betterselect.min.js"></script>
-```
-
 ## Basic Usage
 
 To use, simply wrap a normal `<select>` element in a `<better-select>` tag.
@@ -32,8 +24,6 @@ To use, simply wrap a normal `<select>` element in a `<better-select>` tag.
 This will render a simple dropdown with a search input, like so.
 
 #### Demo
-
-<!-- @include: filename{start-end} -->
 
 <better-select>
   <select name="fruit">
@@ -101,7 +91,7 @@ To enable multiple selections, add the `multiple` attribute to the `<select>` el
 </better-select>
 ```
 
-#### Demo
+#### Demo 
 
 <better-select>
   <select multiple name="fruit">
