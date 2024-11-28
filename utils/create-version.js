@@ -2,12 +2,12 @@ const fs = require('fs');
 const path = require('path');
 
 function createNewVersion() {
-  const baseStylesPath = path.join(__dirname, '..', 'betterselect.js');
+  const betterSelectPath = path.join(__dirname, '..', 'betterselect.js');
   const versionsDir = path.join(__dirname, '..', 'versions');
   const changelogPath = path.join(__dirname, '..', 'changelog.md');
   
-  // Read base-styles.js
-  const baseStylesContent = fs.readFileSync(baseStylesPath, 'utf-8');
+  // Read betterselect.js
+  const betterSelectContent = fs.readFileSync(betterSelectPath, 'utf-8');
 
   // Get the most recent version file
   const versionFiles = fs.readdirSync(versionsDir)
@@ -26,7 +26,7 @@ function createNewVersion() {
   if (versionFiles.length === 0) {
     const newVersion = '0.0.1.js';
     const newVersionPath = path.join(versionsDir, newVersion);
-    fs.writeFileSync(newVersionPath, baseStylesContent);
+    fs.writeFileSync(newVersionPath, betterSelectContent);
     fs.copyFileSync(newVersionPath, path.join(versionsDir, 'latest.js'));
     updateChangelog(newVersion, changelogPath);
     return;
@@ -36,11 +36,11 @@ function createNewVersion() {
   const latestVersionPath = path.join(versionsDir, latestVersion);
   const latestVersionContent = fs.readFileSync(latestVersionPath, 'utf-8');
 
-  // Compare base-styles.js with the most recent version
-  const baseStylesTrimmed = baseStylesContent.trim();
+  // Compare betterselect.js with the most recent version
+  const betterSelectTrimmed = betterSelectContent.trim();
   const latestVersionTrimmed = latestVersionContent.trim();
   
-  if (baseStylesTrimmed === latestVersionTrimmed) {
+  if (betterSelectTrimmed === latestVersionTrimmed) {
     console.log('No changes detected, skipping');
     return;
   }
@@ -50,7 +50,7 @@ function createNewVersion() {
   const newVersion = `${major}.${minor}.${patch + 1}.js`;
   const newVersionPath = path.join(versionsDir, newVersion);
 
-  fs.writeFileSync(newVersionPath, baseStylesContent);
+  fs.writeFileSync(newVersionPath, betterSelectContent);
 
   // Update latest.js
   fs.copyFileSync(newVersionPath, path.join(versionsDir, 'latest.js'));
