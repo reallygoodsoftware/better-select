@@ -17,6 +17,7 @@ class BetterSelect extends HTMLElement {
           <input type="text" class="--input" placeholder="Type to search...">
           <div class="--option-list" role="listbox"></div>
         </div>
+        <input type="hidden">
       </div>
     `;
 
@@ -71,8 +72,7 @@ class BetterSelect extends HTMLElement {
   }
 
   initializeDropdown() {
-    const select = this.querySelector('select:not([hidden])');
-    console.log(select)
+    const select = this.querySelector('select');
     if (!select) return;
 
     const isMultiple = select.hasAttribute('multiple');
@@ -89,23 +89,19 @@ class BetterSelect extends HTMLElement {
     const baseTemplate = this.templates['base']?.innerHTML || this.template;
     this.innerHTML = baseTemplate;
 
-    // Create and append hidden select
-    const hiddenSelect = document.createElement('select');
-    hiddenSelect.hidden = true;
-    this.appendChild(hiddenSelect);
-
     // Get references to key elements
     const container = this.querySelector('.ui-betterselect');
     const selectedTags = this.querySelector('.--tags');
     const dropdownContainer = this.querySelector('.--dropdown');
     const searchInput = this.querySelector('.--input');
     const dropdownList = this.querySelector('.--option-list');
-  
-    console.log('dfjhk', select)
+    const hiddenInput = this.querySelector('input[type="hidden"]');
 
     // Copy select properties to hidden input
-    hiddenSelect.name = select.name;
-    hiddenSelect.multiple = select.multiple;
+    hiddenInput.name = select.name;
+    hiddenInput.value = isMultiple ? 
+      Array.from(select.selectedOptions).map(opt => opt.value).join(',') : 
+      select.value;
 
     // Copy select classes to search input
     searchInput.className += ` ${select.className}`;
@@ -229,20 +225,6 @@ class BetterSelect extends HTMLElement {
       });
     };
 
-    const updateHiddenSelect = () => {
-      // Clear existing options
-      hiddenSelect.innerHTML = '';
-      
-      // Add all options back with correct selected state
-      Array.from(select.options).forEach(option => {
-        const newOption = document.createElement('option');
-        newOption.value = option.value;
-        newOption.text = option.text;
-        newOption.selected = this.selectedValues.has(option.value);
-        hiddenSelect.appendChild(newOption);
-      });
-    };
-
     const toggleSelection = (value) => {
       const option = this.currentOptions.find(opt => opt.value === value);
       if (!option) return;
@@ -265,7 +247,9 @@ class BetterSelect extends HTMLElement {
         option.selected = this.selectedValues.has(option.value);
       });
       
-      updateHiddenSelect();
+      // Update hidden input value
+      hiddenInput.value = isMultiple ? Array.from(this.selectedValues.keys()).join(',') : value;
+      
       updateTags();
       
       // Reset search and show all options
@@ -468,7 +452,6 @@ class BetterSelect extends HTMLElement {
     });
 
     updateTags();
-    updateHiddenSelect();
     updateDropdownItems();
   }
 
